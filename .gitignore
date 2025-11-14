@@ -1,0 +1,5 @@
+.env
+.envp2
+.env.backup
+.env.production
+node_modules
