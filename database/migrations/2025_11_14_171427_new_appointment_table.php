@@ -37,18 +37,6 @@ return new class extends Migration
         });
     }
 
-    //   ''=>$this->name,
-    //         'pateint_phone'=>$this->phone,
-    //         'pateint_email'=>$this->email,
-    //         'pateint_address'=>$this->address,
-    //         'pateint_time'=>$this->appointment_time,
-    //         'pateint_date'=>$this->appointment_date,
-    //         'pateint_prefered_contact'=>$this->preferred_contact,
-    //         'pateint_extra_info'=>$this->notes,
-    //         'created_at'=>now()->toDateTimeString(),
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         //

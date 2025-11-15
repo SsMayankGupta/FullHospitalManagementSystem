@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             general_discussion_dashboard_login_db_seeder::class,
             general_discussion_appointments::class,
             DoctorsRegistrationSeeder::class,
+            new_appointment_table_seeder::class,
         ]);
     }
 }
