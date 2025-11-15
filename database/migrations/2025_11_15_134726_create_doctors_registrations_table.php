@@ -27,38 +27,36 @@ return new class extends Migration
             $table->string('dr_salary');
             $table->string('dr_working_hours');
 
-            $table->string('mon')->nullable();
-            $table->string('tue')->nullable();
-            $table->string('wed')->nullable();
-            $table->string('thus')->nullable();
-            $table->string('frid')->nullable();
-            $table->string('satur')->nullable();
-            $table->string('sun')->nullable();
+            // Mon, Tue, Wed, Thu, Fri, Sat, Sun
 
-            $table->string('mon_start_time')->nullable();
-            $table->string('mon_end_time')->nullable();
+            $table->boolean('Mon')->default(false);
+            $table->boolean('Tue')->default(false);
+            $table->boolean('Wed')->default(false);
+            $table->boolean('Thu')->default(false);
+            $table->boolean('Fri')->default(false);
+            $table->boolean('Sat')->default(false);
+            $table->boolean('Sun')->default(false);
 
-            $table->string('tue_start_time')->nullable();
-            $table->string('tue_end_time')->nullable();
+            $table->string('Mon_start_time')->nullable();
+            $table->string('Mon_end_time')->nullable();
 
-            $table->string('wed_start_time')->nullable();
-            $table->string('wed_end_time')->nullable();
+            $table->string('Tue_start_time')->nullable();
+            $table->string('Tue_end_time')->nullable();
 
-            $table->string('thus_start_time')->nullable();
-            $table->string('thus_end_time')->nullable();
+            $table->string('Wed_start_time')->nullable();
+            $table->string('Wed_end_time')->nullable();
 
-            $table->string('fri_start_time')->nullable();
-            $table->string('fri_end_time')->nullable();
+            $table->string('Thu_start_time')->nullable();
+            $table->string('Thu_end_time')->nullable();
 
-            $table->string('satur_start_time')->nullable();
-            $table->string('satur_end_time')->nullable();
+            $table->string('Fri_start_time')->nullable();
+            $table->string('Fri_end_time')->nullable();
 
-            $table->string('sun_start_time')->nullable();
-            $table->string('sun_end_time')->nullable();
+            $table->string('Sat_start_time')->nullable();
+            $table->string('Sat_end_time')->nullable();
 
-            $table->string('extraday')->nullable();
-            $table->string('extraday_start_time')->nullable();
-            $table->string('extraday_end_time')->nullable();
+            $table->string('Sun_start_time')->nullable();
+            $table->string('Sun_end_time')->nullable();
 
             $table->timestamps();
         });
