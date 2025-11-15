@@ -3,14 +3,16 @@
 namespace App\Livewire\NewAppointments;
 
 use Livewire\Component;
-
 use Tzsk\Otp\Otp;
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Request;
 use Stevebauman\Location\Facades\Location;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Pest\Support\Str;
+use Illuminate\Support\Str;
+use Exception;
+
+use App\Events\NewAppointments\newAppointmentEventByPateint;
 
 class RegisterNewApp extends Component
 {
@@ -38,63 +40,74 @@ class RegisterNewApp extends Component
 
     public function mount()
     {
-
         $ip = Request::ip();
         $location = Location::get("8.8.8.8");
-        $this->address = $location->countryName . " , " . $location->cityName . " , " . $location->zipCode;
 
-        $this->appointment_date = now()->toDateString();
+        if ($location) {
+            $this->address = $location->countryName . " , " . $location->cityName . " , " . $location->zipCode;
+        } else {
+            $this->address = '';
+        }
     }
 
     public function submitPhone()
     {
         $this->validateOnly('phone');
     }
-
     public function submitEmail()
     {
         $this->validateOnly('email');
     }
-
     public function submitAddress()
     {
         $this->validateOnly('address');
     }
-
-    public function submitdate()
+    public function submitDate()
     {
         $this->validateOnly('appointment_date');
     }
-
-    public function submittime()
+    public function submitTime()
     {
         $this->validateOnly('appointment_time');
     }
 
     public function submit()
     {
-
         $this->validate();
 
-        if (DB::table('NewAppointmentTable')->insert([
-            'pateint_id' => Str::random(10),
-            'pateint_name' => $this->name,
-            'pateint_phone' => $this->phone,
-            'pateint_email' => $this->email,
-            'pateint_address' => $this->address,
-            'pateint_appointment_time' => $this->appointment_time,
-            'pateint_appointment_date' => $this->appointment_date,
-            'pateint_prefered_contact' => $this->preferred_contact,
-            'pateint_extra_info' => $this->notes,
+        $patientId = Str::random(10);
+
+        $data = [
+            'patient_id' => $patientId,
+            'patient_name' => $this->name,
+            'patient_phone' => $this->phone,
+            'patient_email' => $this->email,
+            'patient_address' => $this->address,
+            'patient_appointment_time' => $this->appointment_time,
+            'patient_appointment_date' => $this->appointment_date,
+            'patient_prefered_contact' => $this->preferred_contact,
+            'patient_extra_info' => $this->notes,
+            'patient_problem_statement' => $this->problem_statement,
             'created_at' => now()->toDateTimeString(),
-        ])) {
+        ];
 
-            Session::put('NewAppointmentData', DB::table('NewAppointmentTable')->where('pateint_phone', $this->phone)->get()->toArray());
 
-            Session::flash('success', 'Your appointment registration has been completed. Please wait for our team to respond. We’ll get back to you shortly.');
-        } else {
+        try {
 
-            Session::flash('error', 'please retry.....');
+            if (DB::table('NewAppointmentTable')->insert($data)) {
+
+                $appointment = DB::table('NewAppointmentTable')->where('patient_id', $patientId)->first();
+                session()->put('NewAppointmentData', $appointment);
+                session()->flash('success', 'Your appointment registration has been completed. Please wait for our team to respond. We’ll get back to you shortly.');
+
+                event(new newAppointmentEventByPateint($data));
+            } else {
+
+                session()->flash('error', 'Please retry...');
+            }
+        } catch (Exception $exception) {
+
+            session()->flash('error', 'A system error occurred. Please try again later.' . $exception->getMessage());
         }
     }
 

@@ -13,11 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        $this->call(general_discussion_dashboard_login_db_seeder::class);
         $this->call([
+            general_discussion_dashboard_login_db_seeder::class,
             general_discussion_appointments::class,
+            DoctorsRegistrationSeeder::class,
         ]);
     }
 }

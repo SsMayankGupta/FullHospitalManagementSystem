@@ -6,7 +6,6 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="shortcut icon" href="{{ asset('icons8-home-page-60.gif') }}" type="image/x-icon">
 
@@ -50,6 +49,8 @@
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @livewireStyles
 
 </head>
 
@@ -399,6 +400,18 @@
         <div class="p-3 text-3xl text-black">New Appointment Registration</div>
         @livewire(' new-appointments.register_new_app')
     </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            window.Echo.channel('newAppointmentEventByPateintChannel')
+                .listen('NewAppointmentEventByPateint', (e) => {
+                    alert(e);
+                    console.log(e);
+                });
+        });
+    </script>
+
+    @livewireScripts
 
 </body>
 

@@ -13,27 +13,26 @@ return new class extends Migration
     {
         Schema::create('NewAppointmentTable', function (Blueprint $table) {
 
-            $table->string('pateint_id')->unique();
-            $table->string('pateint_name');
-            $table->string('pateint_email');
-            $table->string('pateint_phone');
-            $table->string('pateint_address');
-            $table->string('pateint_appointment_time');
-            $table->string('pateint_appointment_date');
-            $table->string('pateint_prefered_contact');
-            $table->string('pateint_extra_info')->nullable();
+            $table->string('patient_id')->unique();
+            $table->string('patient_name');
+            $table->string('patient_email');
+            $table->string('patient_phone');
+            $table->string('patient_address');
+            $table->string('patient_appointment_time');
+            $table->string('patient_appointment_date');
+            $table->string('patient_prefered_contact');
+            $table->string('patient_problem_statement');
+            $table->string('patient_extra_info')->nullable();
 
-            $table->string('pateint_allocated_dr_id')->nullable();
-            $table->string('pateint_allocated_dr_name')->nullable();
-            $table->string('pateint_allocated_dr_education')->nullable();
-            $table->boolean('pateint_allocated_dr_confirmation')->default(false);
-            $table->string('pateint_allocated_dr_confirmation_date_time')->nullable();
-            $table->string('pateint_allocated_dr_meeting_hall')->nullable();
-            $table->text('pateint_allocated_dr_meeting_message')->nullable();
-            $table->text('pateint_allocated_dr_meeting_done_status')->nullable();
-            $table->text('pateint_allocated_dr_meeting_done_number')->nullable();
-
-
+            $table->string('patient_allocated_dr_id')->nullable();
+            $table->string('patient_allocated_dr_name')->nullable();
+            $table->string('patient_allocated_dr_education')->nullable();
+            $table->boolean('patient_allocated_dr_confirmation')->default(false);
+            $table->string('patient_allocated_dr_confirmation_date_time')->nullable();
+            $table->string('patient_allocated_dr_meeting_hall')->nullable();
+            $table->text('patient_allocated_dr_meeting_message')->nullable();
+            $table->text('patient_allocated_dr_meeting_done_status')->nullable();
+            $table->text('patient_allocated_dr_meeting_done_number')->nullable();
             $table->dateTime('created_at');
         });
     }
