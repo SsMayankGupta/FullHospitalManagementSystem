@@ -1,2 +1,2 @@
-.env
-.envp2
+*.env*
+*.envp2*
